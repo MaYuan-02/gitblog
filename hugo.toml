@@ -4,7 +4,8 @@ title = '我的博客'
 theme = 'stack'
 
 # 每页文章数
-paginate = 10
+[pagination]
+    pagerSize = 10
 
 # 启用 Git 信息
 enableGitInfo = true
