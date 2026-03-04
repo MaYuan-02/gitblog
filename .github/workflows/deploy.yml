@@ -1,45 +1,58 @@
-name: Deploy Hugo Site to GitHub Pages
-
+name: "Build and Deploy"
 on:
   push:
-    branches:
-      - master  # 当推送到 main 分支时触发
-  pull_request:
-    branches:
-      - master  # 当 PR 到 main 分支时也触发（可选）
+    branches: ["master"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+defaults:
+  run:
+    shell: bash
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
+    env:
+      HUGO_VERSION: 0.141.0
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        submodules: recursive  # 递归检出子模块，确保主题也被包含
-        fetch-depth: 0        # 获取完整历史，支持 gitinfo 功能
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - name: Setup Pages
+        id: pages
+        uses: actions/configure-pages@v5
+      - name: Build with Hugo
+        env:
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
+        run: |
+          hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./public
 
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v3
-      with:
-        hugo-version: 'latest'  # 使用最新版本的 Hugo
-        extended: true          # 使用扩展版 Hugo (支持 SCSS/SASS)
-
-    - name: List files before build
-      run: ls -la && ls -la themes/
-
-    - name: Build website
-      run: |
-        # 检查当前分支和 hugo.toml 配置
-        echo "Building Hugo site..."
-        echo "Base URL: $(grep baseURL hugo.toml)"
-        hugo --minify --verbose
-
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
-        publish_branch: gh-pages
-        force_orphan: true  # 创建孤儿分支，保持干净的历史记录
-        commit_message: "Deploy Hugo site: ${{ github.event.head_commit.message }}"
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
