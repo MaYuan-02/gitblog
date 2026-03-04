@@ -1,7 +1,7 @@
 ---
 title: "关于我"
 description: "这是我的个人博客，记录学习、技术和生活"
-date: 2024-01-01T00:00:00+08:00
+date: 2026-03-04T00:00:00+08:00
 draft: false
 layout: "single"
 ---
@@ -21,23 +21,10 @@ layout: "single"
 - 🌱 记录生活中的美好瞬间
 - 🤝 与志同道合的朋友交流
 
-## 🛠️ 技术栈
-
-我主要使用的技术包括：
-
-| 类别     | 技术                     |
-| -------- | ------------------------ |
-| 编程语言 | Go, Python, JavaScript   |
-| 前端     | React, Vue, TypeScript   |
-| 后端     | Gin, Django, Node.js     |
-| 数据库   | MySQL, PostgreSQL, Redis |
-| 工具     | Git, Docker, Kubernetes  |
-
 ## 📬 联系我
 
-- 📧 邮箱：your@email.com
-- 💻 GitHub：[@yourusername](https://github.com/yourusername)
-- 🐦 Twitter：[@yourusername](https://twitter.com/yourusername)
+- 📧 邮箱：734839069@qq.com
+- 💻 GitHub：[@MaYuan-02](https://github.com/MaYuan-02)
 
 ## 🙏 感谢
 
@@ -45,4 +32,4 @@ layout: "single"
 
 ---
 
-_最后更新：2024 年 1 月_
+_最后更新：2026 年 3 月_

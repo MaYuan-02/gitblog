@@ -21,7 +21,7 @@ enableGitInfo = true
 
     # 页脚配置
     [params.footer]
-        since = 2024
+        since = 2026
 
     # 侧边栏配置
     [params.sidebar]
