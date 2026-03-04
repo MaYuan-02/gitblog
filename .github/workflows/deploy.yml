@@ -1,0 +1,45 @@
+name: Deploy Hugo Site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # 当推送到 main 分支时触发
+  pull_request:
+    branches:
+      - main  # 当 PR 到 main 分支时也触发（可选）
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive  # 递归检出子模块，确保主题也被包含
+        fetch-depth: 0        # 获取完整历史，支持 gitinfo 功能
+
+    - name: Setup Hugo
+      uses: peaceiris/actions-hugo@v3
+      with:
+        hugo-version: 'latest'  # 使用最新版本的 Hugo
+        extended: true          # 使用扩展版 Hugo (支持 SCSS/SASS)
+
+    - name: List files before build
+      run: ls -la && ls -la themes/
+
+    - name: Build website
+      run: |
+        # 检查当前分支和 hugo.toml 配置
+        echo "Building Hugo site..."
+        echo "Base URL: $(grep baseURL hugo.toml)"
+        hugo --minify --verbose
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./public
+        publish_branch: gh-pages
+        force_orphan: true  # 创建孤儿分支，保持干净的历史记录
+        commit_message: "Deploy Hugo site: ${{ github.event.head_commit.message }}"

@@ -1,3 +1,137 @@
-baseURL = 'https://example.org/'
-languageCode = 'en-us'
-title = 'My New Hugo Project'
+baseURL = 'https://mayuanyuan-repo.github.io/gitblog/'
+languageCode = 'zh-cn'
+title = '我的博客'
+theme = 'stack'
+
+# 每页文章数
+paginate = 10
+
+# 启用 Git 信息
+enableGitInfo = true
+
+# 主栏目设置
+[params]
+    mainSections = ["posts"]
+    subtitle = "记录学习与生活"
+    favicon = "img/avatar.png"
+
+    # 主题颜色：auto, light, dark
+    theme = "auto"
+
+    # 页脚配置
+    [params.footer]
+        since = 2024
+
+    # 侧边栏配置
+    [params.sidebar]
+        emoji = "📝"
+        # avatar 设置为空，使用主题默认头像
+        avatar = ""
+
+    # 作者信息
+    [params.author]
+        name = "作者名字"
+        email = "your@email.com"
+        link = "https://example.org"
+
+    # 文章配置
+    [params.article]
+        math = false
+        toc = true
+        readingTime = true
+        [params.article.license]
+            enabled = true
+            default = '本文采用 [知识共享署名 - 非商业性使用 - 相同方式共享 4.0 国际许可协议](https://creativecommons.org/licenses/by-nc-sa/4.0/) 进行许可。'
+
+    # 社交链接
+    [[params.socialLinks]]
+        icon = "github"
+        name = "GitHub"
+        url = "https://github.com/yourusername"
+    [[params.socialLinks]]
+        icon = "twitter"
+        name = "Twitter"
+        url = "https://twitter.com/yourusername"
+    [[params.socialLinks]]
+        icon = "email"
+        name = "Email"
+        url = "mailto:your@email.com"
+
+    # 小工具配置
+    [params.widgets]
+        homepage = [
+            { type = "search" },
+            { type = "archives", params = { limit = 5 } },
+            { type = "categories", params = { limit = 10 } },
+            { type = "tag-cloud", params = { limit = 10 } },
+        ]
+        page = [{ type = "toc" }]
+
+    # 评论配置
+    [params.comments]
+        enabled = false
+        provider = "disqus"
+
+# 语法高亮
+[markup]
+    [markup.highlight]
+        codeFences = true
+        guessSyntax = true
+        lineNos = true
+        lineNumbersInTable = false
+        noClasses = false
+
+    [markup.goldmark]
+        [markup.goldmark.renderer]
+            unsafe = true
+
+# 菜单配置
+[menu]
+    [[menu.main]]
+        identifier = "posts"
+        name = "文章"
+        pageRef = "/posts"
+        weight = 10
+    [[menu.main]]
+        identifier = "categories"
+        name = "分类"
+        pageRef = "/categories"
+        weight = 20
+    [[menu.main]]
+        identifier = "tags"
+        name = "标签"
+        pageRef = "/tags"
+        weight = 30
+    [[menu.main]]
+        identifier = "about"
+        name = "关于"
+        pageRef = "/about"
+        weight = 40
+    [[menu.main]]
+        identifier = "archives"
+        name = "归档"
+        pageRef = "/page/archives"
+        weight = 50
+
+# 隐私配置
+[privacy]
+    [privacy.disqus]
+        disable = false
+    [privacy.googleAnalytics]
+        anonymizeIP = true
+        disable = false
+        respectDoNotTrack = true
+        useSessionStorage = true
+    [privacy.x]
+        disable = false
+        enableDNT = true
+        simple = true
+
+# 安全配置
+[security]
+    enableInlineShortcodes = false
+    [security.exec]
+        allow = ['^dart-sass-embedded$', '^git$', '^go$', '^npx$', '^postcss$', '^tailwindcss$']
+        os = ['darwin', 'linux', 'windows']
+    [security.funcs]
+        getenv = ['^HUGO_', '^CI$']

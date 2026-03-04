@@ -1,0 +1,49 @@
+# Hugo build artifacts
+/public/
+resources/_gen/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.swp
+*.swo
+*~
+
+# IDE specific files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Hugo cache
+.hugo_build.lock
+
+# Local environment specific files
+.env
+config-local.toml
+
+# Private files that may contain sensitive information
+private/
+secrets/
+
+# Generated images
+resources/_gen/images/
+
+# Go build artifacts (in case of custom go modules)
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Local hugo server files
+.hugo_stats.json
